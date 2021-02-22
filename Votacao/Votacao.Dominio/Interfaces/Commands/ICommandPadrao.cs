@@ -1,4 +1,4 @@
-﻿namespace Votacao.Domain.Interfaces.Commands
+﻿namespace Votacao.Dominio.Interfaces.Commands
 {
     public interface ICommandPadrao
     {

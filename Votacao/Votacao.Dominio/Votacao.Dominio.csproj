@@ -5,9 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\Filme\Inputs\" />
-    <Folder Include="Commands\Filme\" />
-    <Folder Include="Commands\Filme\Outputs\" />
     <Folder Include="Commands\Usuario\Inputs\" />
     <Folder Include="Commands\Usuario\Outputs\" />
     <Folder Include="Commands\Voto\Inputs\" />
