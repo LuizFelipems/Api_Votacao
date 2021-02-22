@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Commands\Filme\Inputs\" />
+    <Folder Include="Commands\Filme\" />
+    <Folder Include="Commands\Filme\Outputs\" />
+    <Folder Include="Commands\Usuario\Inputs\" />
+    <Folder Include="Commands\Usuario\Outputs\" />
+    <Folder Include="Commands\Voto\Inputs\" />
+    <Folder Include="Commands\Voto\Outputs\" />
+    <Folder Include="Handlers\" />
+    <Folder Include="Interfaces\Repositories\" />
+    <Folder Include="Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Flunt" Version="1.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.11" />
+  </ItemGroup>
+
+</Project>
