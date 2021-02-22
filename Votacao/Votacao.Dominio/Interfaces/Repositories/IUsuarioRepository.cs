@@ -17,5 +17,6 @@ namespace Votacao.Dominio.Interfaces.Repositories
         Task<bool> CheckIdAsync(Guid id);
         Task<bool> CheckAutenticacaoAsync(string login, string senha);
         Task<bool> CheckLoginAsync(string login);
+        Task<bool> CheckUsuarioVotouAsync(Guid id);
     }
 }

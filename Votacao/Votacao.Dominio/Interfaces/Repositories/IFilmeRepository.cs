@@ -14,5 +14,7 @@ namespace Votacao.Dominio.Interfaces.Repositories
         Task<List<FilmeQueryResult>> ListarAsync();
         Task<FilmeQueryResult> ObterPorIdAsync(Guid id);
         Task<bool> CheckIdAsync(Guid id);
+        Task VotarAsync(Voto voto);
+        Task<List<FilmeQueryResult>> ListarMaisVotadosAsync(string nome, string diretor, string genero, string atores);
     }
 }

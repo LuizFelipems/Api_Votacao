@@ -14,10 +14,12 @@ namespace Votacao.Dominio.Handlers
                                                 ICommandHandler<ApagarFilmeCommand>
     {
         private readonly IFilmeRepository _filmeRepository;
+        private readonly IUsuarioRepository _usuarioRepository;
 
-        public FilmeHandler(IFilmeRepository filmeRepository)
+        public FilmeHandler(IFilmeRepository filmeRepository, IUsuarioRepository usuarioRepository)
         {
             _filmeRepository = filmeRepository;
+            _usuarioRepository = usuarioRepository;
         }
 
         public async Task<ICommandResult> HandlerAsync(AdicionarFilmeCommand command)
@@ -77,6 +79,35 @@ namespace Votacao.Dominio.Handlers
 
                 return new FilmeCommandResult(true, Avisos.Filme_Apagado_com_sucesso,
                     new { command.Id });
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        public async Task<ICommandResult> HandlerAsync(VotarCommand command)
+        {
+            try
+            {
+                if (!command.ValidarCommand())
+                    return new FilmeCommandResult(false, Avisos.Por_favor_corrija_as_inconsistências_abaixo, command.Notifications);
+
+                if (!await _usuarioRepository.CheckIdAsync(command.IdUsuario))
+                    AddNotification("IdUsuario", Avisos.Id_invalido_Este_Id_nao_esta_cadastrado);
+
+                if (!await _filmeRepository.CheckIdAsync(command.IdFilme))
+                    AddNotification("IdFilme", Avisos.Id_invalido_Este_Id_nao_esta_cadastrado);
+
+                if (await _usuarioRepository.CheckUsuarioVotouAsync(command.IdUsuario))
+                    AddNotification("IdUsuario", Avisos.Esse_usuario_ja_votou);
+
+                if (Invalid)
+                    return new FilmeCommandResult(false, Avisos.Por_favor_corrija_as_inconsistências_abaixo, Notifications);
+
+                Voto voto = new Voto(command.IdUsuario, command.IdFilme, command.Pontuacao);
+
+                await _filmeRepository.VotarAsync(voto);
+
+                return new FilmeCommandResult(true, Avisos.Voto_realizado_com_sucesso,
+                    new { voto.IdFilme, voto.IdUsuario, voto.Pontuacao });
             }
             catch (Exception ex) { throw ex; }
         }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Votacao.Dominio.Entidades
 {
@@ -9,21 +8,24 @@ namespace Votacao.Dominio.Entidades
         public string Login { get; private set; }
         public string Senha { get; private set; }
         public string Role { get; private set; }
+        public bool Ativo { get; private set; }
 
-        public Usuario(string nome, string login, string senha, string role)
+        public Usuario(string nome, string login, string senha, string role, bool ativo = true)
         {
             Nome = nome;
             Login = login;
             Senha = senha;
             Role = role;
+            Ativo = ativo;
         }
 
-        public Usuario(Guid id, string nome, string login, string senha, string role) : base(id)
+        public Usuario(Guid id, string nome, string login, string senha, string role, bool ativo = true) : base(id)
         {
             Nome = nome;
             Login = login;
             Senha = senha;
             Role = role;
+            Ativo = ativo;
         }
     }
 }

@@ -1,3 +1,5 @@
+using ElmahCore.Mvc;
+using ElmahCore.Sql;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -18,6 +20,9 @@ using Votacao.Dominio;
 using Votacao.Dominio.Autenticacao;
 using Votacao.Dominio.Handlers;
 using Votacao.Dominio.Interfaces.Repositories;
+using Votacao.Infra;
+using Votacao.Infra.DataContexts;
+using Votacao.Infra.Repositories;
 
 namespace Votacao.Api
 {
@@ -35,12 +40,21 @@ namespace Votacao.Api
         {
             #region [+] AppSettings
             services.Configure<SettingsDomain>(options => Configuration.GetSection("SettingsDomain").Bind(options));
+            services.Configure<SettingsInfra>(options => Configuration.GetSection("SettingsInfra").Bind(options));
+            #endregion
+
+            #region [+] DataContexts
+            services.AddScoped<DataContext>();
             #endregion
 
             #region [+] Handlers
             services.AddTransient<UsuarioHandler>();
             services.AddTransient<FilmeHandler>();
-            services.AddTransient<VotoHandler>();
+            #endregion
+
+            #region [+] Repositories
+            services.AddTransient<IFilmeRepository, FilmeRepository>();
+            services.AddTransient<IUsuarioRepository, UsuarioRepository>();
             #endregion
 
             #region [+] Swagger
@@ -91,6 +105,13 @@ namespace Votacao.Api
             services.AddTransient<TokenService>();
             #endregion
 
+            #region [+] Elmah
+            services.AddElmah<SqlErrorLog>(options =>
+            {
+                options.ConnectionString = Configuration.GetValue<string>("SettingsInfra:ConnectionString");
+            });
+            #endregion
+
             services.AddControllers();
         }
 
@@ -110,8 +131,11 @@ namespace Votacao.Api
 
             app.UseHttpsRedirection();
 
+            app.UseElmah();
+
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

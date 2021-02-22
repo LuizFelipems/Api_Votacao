@@ -1,0 +1,12 @@
+C:\Users\Felipe\Documents\api-desafio\empresas-dotnet\Votacao\Votacao.Infra\bin\Debug\netcoreapp3.1\Votacao.Infra.deps.json
+C:\Users\Felipe\Documents\api-desafio\empresas-dotnet\Votacao\Votacao.Infra\bin\Debug\netcoreapp3.1\Votacao.Infra.dll
+C:\Users\Felipe\Documents\api-desafio\empresas-dotnet\Votacao\Votacao.Infra\bin\Debug\netcoreapp3.1\Votacao.Infra.pdb
+C:\Users\Felipe\Documents\api-desafio\empresas-dotnet\Votacao\Votacao.Infra\bin\Debug\netcoreapp3.1\Votacao.Dominio.dll
+C:\Users\Felipe\Documents\api-desafio\empresas-dotnet\Votacao\Votacao.Infra\bin\Debug\netcoreapp3.1\Votacao.Dominio.pdb
+C:\Users\Felipe\Documents\api-desafio\empresas-dotnet\Votacao\Votacao.Infra\obj\Debug\netcoreapp3.1\Votacao.Infra.csprojAssemblyReference.cache
+C:\Users\Felipe\Documents\api-desafio\empresas-dotnet\Votacao\Votacao.Infra\obj\Debug\netcoreapp3.1\Votacao.Infra.AssemblyInfoInputs.cache
+C:\Users\Felipe\Documents\api-desafio\empresas-dotnet\Votacao\Votacao.Infra\obj\Debug\netcoreapp3.1\Votacao.Infra.AssemblyInfo.cs
+C:\Users\Felipe\Documents\api-desafio\empresas-dotnet\Votacao\Votacao.Infra\obj\Debug\netcoreapp3.1\Votacao.Infra.csproj.CoreCompileInputs.cache
+C:\Users\Felipe\Documents\api-desafio\empresas-dotnet\Votacao\Votacao.Infra\obj\Debug\netcoreapp3.1\Votacao.Infra.csproj.CopyComplete
+C:\Users\Felipe\Documents\api-desafio\empresas-dotnet\Votacao\Votacao.Infra\obj\Debug\netcoreapp3.1\Votacao.Infra.dll
+C:\Users\Felipe\Documents\api-desafio\empresas-dotnet\Votacao\Votacao.Infra\obj\Debug\netcoreapp3.1\Votacao.Infra.pdb
