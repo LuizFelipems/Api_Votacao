@@ -26,14 +26,12 @@ namespace Votacao.Dominio.Commands.Filme.Inputs
                 else if (Diretor.Length > 50)
                     AddNotification("Diretor", Avisos.Campo_maior_que_o_esperado);
 
-                if (Genero != null)
+                if (string.IsNullOrEmpty(Genero))
                     AddNotification("Genero", Avisos.Campo_obrigatorio);
                 else if (Genero.Length > 50)
                     AddNotification("Genero", Avisos.Campo_maior_que_o_esperado);
 
-                if (Atores != null)
-                    AddNotification("Atores", Avisos.Campo_obrigatorio);
-                else if (Atores.Count <= 0)
+                if (Atores.Count <= 0)
                     AddNotification("Atores", Avisos.Campo_obrigatorio);
 
                 return Valid;

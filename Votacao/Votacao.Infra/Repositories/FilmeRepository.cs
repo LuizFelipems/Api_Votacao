@@ -26,13 +26,14 @@ namespace Votacao.Infra.Repositories
         {
             try
             {
+                _parametros.Add("Id", filme.Id, DbType.Guid);
                 _parametros.Add("Nome", filme.Nome, DbType.String);
                 _parametros.Add("Diretor", filme.Diretor, DbType.String);
                 _parametros.Add("Genero", filme.Genero, DbType.String);
                 _parametros.Add("Atores", JsonSerializer.Serialize(filme.Atores), DbType.String);
 
-                var sql = @"INSERT INTO Filme (Nome, Diretor, Genero, Atores) 
-                            VALUES (@Nome, @Diretor, @Genero, @Atores); SELECT SCOPE_IDENTITY();";
+                var sql = @"INSERT INTO Filme (Id, Nome, Diretor, Genero, Atores) 
+                            VALUES (@Id, @Nome, @Diretor, @Genero, @Atores); SELECT SCOPE_IDENTITY();";
 
                 await _dataContext.SQLConnection.ExecuteAsync(sql, _parametros);
             }
@@ -43,13 +44,13 @@ namespace Votacao.Infra.Repositories
         {
             try
             {
-                _parametros.Add("Id", filme.Id, DbType.String);
+                _parametros.Add("Id", filme.Id, DbType.Guid);
                 _parametros.Add("Nome", filme.Nome, DbType.String);
                 _parametros.Add("Diretor", filme.Diretor, DbType.String);
                 _parametros.Add("Genero", filme.Genero, DbType.String);
                 _parametros.Add("Atores", JsonSerializer.Serialize(filme.Atores), DbType.String);
 
-                var sql = @"UPDATE Filme SET Nome=@Nome, Diretor=@Diretor, Genero=@Genero, Atores=@Atores
+                var sql = @"UPDATE Filme SET Id=@Id, Nome=@Nome, Diretor=@Diretor, Genero=@Genero, Atores=@Atores
                             WHERE Id=@Id;";
 
                 await _dataContext.SQLConnection.ExecuteAsync(sql, _parametros);
@@ -61,7 +62,7 @@ namespace Votacao.Infra.Repositories
         {
             try
             {
-                _parametros.Add("Id", id, DbType.String);
+                _parametros.Add("Id", id, DbType.Guid);
 
                 var sql = @"DELETE FROM Filme WHERE Id=@Id;";
 
@@ -90,7 +91,7 @@ namespace Votacao.Infra.Repositories
         {
             try
             {
-                _parametros.Add("Id", id, DbType.String);
+                _parametros.Add("Id", id, DbType.Guid);
 
                 var sql = @"SELECT * FROM Filme WHERE Id=@Id;";
 
@@ -108,13 +109,16 @@ namespace Votacao.Infra.Repositories
         {
             try
             {
-                _parametros.Add("Id", id, DbType.String);
+                _parametros.Add("Id", id, DbType.Guid);
 
                 var sql = @"SELECT * FROM Filme WHERE Id=@Id;";
 
-                var result = await _dataContext.SQLConnection.QueryAsync<bool>(sql, _parametros);
+                var result = await _dataContext.SQLConnection.QueryAsync<FilmeQueryResult>(sql, _parametros);
 
-                return result.FirstOrDefault();
+                if (result.Count() > 0)
+                    return true;
+
+                return false;
             }
             catch (Exception ex) { throw ex; }
         }
@@ -123,11 +127,11 @@ namespace Votacao.Infra.Repositories
         {
             try
             {
-                _parametros.Add("IdUsuario", voto.IdUsuario, DbType.String);
-                _parametros.Add("IdFilme", voto.IdFilme, DbType.String);
-                _parametros.Add("Pontuacao", voto.Pontuacao, DbType.Int64);
+                _parametros.Add("IdUsuario", voto.IdUsuario, DbType.Guid);
+                _parametros.Add("IdFilme", voto.IdFilme, DbType.Guid);
+                _parametros.Add("Pontuacao", voto.Pontuacao, DbType.Int32);
 
-                var sql = @"INSERT INTO Voto (IdUsuario, IdFilme) VALUES (@IdUsuario, @IdFilme); SELECT SCOPE_IDENTITY();";
+                var sql = @"INSERT INTO Voto (IdUsuario, IdFilme, Pontuacao) VALUES (@IdUsuario, @IdFilme, @Pontuacao); SELECT SCOPE_IDENTITY();";
 
                 await _dataContext.SQLConnection.ExecuteScalarAsync<long>(sql, _parametros);
             }
@@ -150,15 +154,6 @@ namespace Votacao.Infra.Repositories
 		                            MAX(f.Atores) as Atores,
 		                            SUM(v.Pontuacao) as QuantidadeVotos from filme f
                             JOIN Voto v on f.Id = v.IdFilme
-
-                            WHERE (@Nome IS NULL 
-		                            OR f.Nome like '%@Nome%') AND
-	                            (@Diretor IS NULL 
-		                            OR f.Diretor like '%@Diretor%') AND
-	                            (@Genero IS NULL 
-		                            OR f.Genero like '%@Genero%') AND
-	                            (@Atores IS NULL 
-		                            OR f.Atores like '%@Atores%')
                             GROUP BY f.Nome
                             ORDER BY f.Nome, sum(v.Pontuacao);";
 

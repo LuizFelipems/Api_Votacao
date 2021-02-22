@@ -20,6 +20,9 @@ namespace Votacao.Dominio.Commands.Filme.Inputs
                 if (IdFilme == Guid.Empty)
                     AddNotification("IdFilme", Avisos.Campo_obrigatorio);
 
+                if (Pontuacao > 4)
+                    AddNotification("Pontuacao", Avisos.Pontuacao_Invalida);
+
                 return Valid;
             }
             catch (Exception ex)

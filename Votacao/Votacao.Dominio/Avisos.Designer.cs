@@ -140,7 +140,18 @@ namespace Votacao.Dominio {
                 return ResourceManager.GetString("Login_ou_Senha_invalidos", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Pontuacao Invalida..
+        /// </summary>
+        internal static string Pontuacao_Invalida
+        {
+            get
+            {
+                return ResourceManager.GetString("Pontuacao_Invalida", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Por favor, corrija as inconsistências abaixo..
         /// </summary>

@@ -4,5 +4,123 @@
         <name>Votacao.Api</name>
     </assembly>
     <members>
+        <member name="M:Votacao.Api.Controllers.FilmeController.FilmesAsync(System.String,System.String,System.String,System.String)">
+            <summary>
+            Filmes
+            </summary>                
+            <remarks><h2><b>Lista os Filmes por osrdem de mais votado.</b></h2></remarks>
+            <response code="200">OK Request</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:Votacao.Api.Controllers.FilmeController.FilmeAsync(System.Guid)">
+            <summary>
+            Filmes
+            </summary>                
+            <remarks><h2><b>Consulta o Filme.</b></h2></remarks>
+            <param name="id">Parâmetro requerido id do Filme</param>
+            <response code="200">OK Request</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:Votacao.Api.Controllers.FilmeController.FilmeInserirAsync(Votacao.Dominio.Commands.Filme.Inputs.AdicionarFilmeCommand)">
+            <summary>
+            Incluir Filme 
+            </summary>                
+            <remarks><h2><b>Administrador pode Incluir novo Filme.</b></h2></remarks>
+            <param name="command">Parâmetro requerido command de Insert</param>
+            <response code="200">OK Request</response>
+            <response code="400">Bad Request</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:Votacao.Api.Controllers.FilmeController.FilmeAlterarAsync(System.Guid,Votacao.Dominio.Commands.Filme.Inputs.AtualizarFilmeCommand)">
+            <summary>
+            Alterar Filme
+            </summary>        
+            <remarks><h2><b>Alterar Filme.</b></h2></remarks>
+            <param name="id">Parâmetro requerido id do Filme</param>        
+            <param name="command">Parâmetro requerido command de Update</param>
+            <response code="200">OK Request</response>
+            <response code="400">Bad Request</response>
+            <response code="401">Unauthorized</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:Votacao.Api.Controllers.FilmeController.FilmeApagarAsync(System.Guid)">
+            <summary>
+            Excluir Filme
+            </summary>                
+            <remarks><h2><b>Excluir Filme.</b></h2></remarks>
+            <param name="id">Parâmetro requerido id do Filme</param>        
+            <response code="200">OK Request</response>
+            <response code="400">Bad Request</response>
+            <response code="401">Unauthorized</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:Votacao.Api.Controllers.FilmeController.VotarAsync(Votacao.Dominio.Commands.Filme.Inputs.VotarCommand)">
+            <summary>
+            Votar
+            </summary>                
+            <remarks><h2><b>Usuário pode Votar no filme escolhido.</b></h2></remarks>
+            <param name="command">Parâmetro requerido command de Insert</param>
+            <response code="200">OK Request</response>
+            <response code="400">Bad Request</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:Votacao.Api.Controllers.HealthCheckController.HealthCheck">
+            <summary>
+            Health Check
+            </summary>
+            <remarks><h2>Verifica se a api está funcionando.</h2></remarks>
+            <returns code="200"></returns>
+            <returns code="500">Internal Server Error</returns>
+        </member>
+        <member name="M:Votacao.Api.Controllers.UsuarioController.UsuariosAsync">
+            <summary>
+            Usuarios
+            </summary>                
+            <remarks><h2><b>Lista todos os Usuarios não administradores ativos.</b></h2></remarks>
+            <response code="200">OK Request</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:Votacao.Api.Controllers.UsuarioController.UsuarioAsync(System.Guid)">
+            <summary>
+            Usuarios
+            </summary>                
+            <remarks><h2><b>Consulta o Usuario.</b></h2></remarks>
+            <param name="id">Parâmetro requerido id do Usuario</param>
+            <response code="200">OK Request</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:Votacao.Api.Controllers.UsuarioController.UsuarioInserirAsync(Votacao.Dominio.Commands.Usuario.Inputs.AdicionarUsuarioCommand)">
+            <summary>
+            Incluir Usuario 
+            </summary>                
+            <remarks><h2><b>Incluir novo Usuario. Roles: Visitante, Administrador</b></h2></remarks>
+            <param name="command">Parâmetro requerido command de Insert</param>
+            <response code="200">OK Request</response>
+            <response code="400">Bad Request</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:Votacao.Api.Controllers.UsuarioController.UsuarioAlterarAsync(System.Guid,Votacao.Dominio.Commands.Usuario.Inputs.AtualizarUsuarioCommand)">
+            <summary>
+            Alterar Usuario
+            </summary>        
+            <remarks><h2><b>Alterar Usuario. Roles: Visitante, Administrador</b></h2></remarks>
+            <param name="id">Parâmetro requerido id do Usuario</param>        
+            <param name="command">Parâmetro requerido command de Update</param>
+            <response code="200">OK Request</response>
+            <response code="400">Bad Request</response>
+            <response code="401">Unauthorized</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:Votacao.Api.Controllers.UsuarioController.UsuarioApagarAsync(System.Guid)">
+            <summary>
+            Excluir Usuario
+            </summary>                
+            <remarks><h2><b>Excluir Usuario.</b></h2></remarks>
+            <param name="id">Parâmetro requerido id do Usuario</param>        
+            <response code="200">OK Request</response>
+            <response code="400">Bad Request</response>
+            <response code="401">Unauthorized</response>
+            <response code="500">Internal Server Error</response>
+        </member>
     </members>
 </doc>

@@ -25,12 +25,15 @@ namespace Votacao.Infra.Repositories
         {
             try
             {
+                _parametros.Add("Id", usuario.Id, DbType.Guid);
                 _parametros.Add("Nome", usuario.Nome, DbType.String);
                 _parametros.Add("Login", usuario.Login, DbType.String);
                 _parametros.Add("Senha", usuario.Senha, DbType.String);
                 _parametros.Add("Role", usuario.Role, DbType.String);
+                _parametros.Add("Ativo", usuario.Ativo, DbType.String);
 
-                var sql = @"INSERT INTO Usuario (Nome, Login, Senha, Role) VALUES (@Nome, @Login, @Senha, @Role); SELECT SCOPE_IDENTITY();";
+                var sql = @"INSERT INTO Usuario (Id, Nome, Login, Senha, Role, Ativo) VALUES 
+                            (@Id, @Nome, @Login, @Senha, @Role, @Ativo); SELECT SCOPE_IDENTITY();";
 
                 await _dataContext.SQLConnection.ExecuteScalarAsync<long>(sql, _parametros);
             }
@@ -41,13 +44,13 @@ namespace Votacao.Infra.Repositories
         {
             try
             {
-                _parametros.Add("Id", usuario.Id, DbType.String);
+                _parametros.Add("Id", usuario.Id, DbType.Guid);
                 _parametros.Add("Nome", usuario.Nome, DbType.String);
                 _parametros.Add("Login", usuario.Login, DbType.String);
                 _parametros.Add("Senha", usuario.Senha, DbType.String);
                 _parametros.Add("Role", usuario.Role, DbType.String);
 
-                var sql = @"UPDATE Usuario SET Nome=@Nome, Login=@Login, Senha=@Senha, Role=@Role WHERE Id=@Id;";
+                var sql = @"UPDATE Usuario SET Id=@Id, Nome=@Nome, Login=@Login, Senha=@Senha, Role=@Role WHERE Id=@Id;";
 
                 await _dataContext.SQLConnection.ExecuteAsync(sql, _parametros);
             }
@@ -58,9 +61,7 @@ namespace Votacao.Infra.Repositories
         {
             try
             {
-                _parametros.Add("Id", id, DbType.String);
-
-                var sql = @"DELETE FROM Usuario WHERE Id=@Id;";
+                var sql = @"UPDATE Usuario SET Ativo=0 WHERE Id=@Id;";
 
                 await _dataContext.SQLConnection.ExecuteAsync(sql, _parametros);
             }
@@ -71,7 +72,10 @@ namespace Votacao.Infra.Repositories
         {
             try
             {
-                var sql = @"SELECT * FROM Usuario ORDER BY Nome;";
+                var sql = @"SELECT * FROM Usuario
+                            WHERE Role = 'Visitante'
+                            AND Ativo = 1
+                            ORDER BY Nome;";
 
                 var result = await _dataContext.SQLConnection.QueryAsync<UsuarioQueryResult>(sql);
 
@@ -84,7 +88,7 @@ namespace Votacao.Infra.Repositories
         {
             try
             {
-                _parametros.Add("Id", id, DbType.String);
+                _parametros.Add("Id", id, DbType.Guid);
 
                 var sql = @"SELECT * FROM Usuario WHERE Id=@Id;";
 
@@ -114,13 +118,16 @@ namespace Votacao.Infra.Repositories
         {
             try
             {
-                _parametros.Add("Id", id, DbType.String);
+                _parametros.Add("Id", id, DbType.Guid);
 
-                var sql = @"SELECT * FROM Usuario WHERE Id=@Id;";
+                var sql = @"SELECT * FROM Usuario WHERE Id=@Id AND Ativo = 1;";
 
-                var result = await _dataContext.SQLConnection.QueryAsync<bool>(sql, _parametros);
+                var result = await _dataContext.SQLConnection.QueryAsync<UsuarioQueryResult>(sql, _parametros);
 
-                return result.FirstOrDefault();
+                if (result.Count() > 0)
+                    return true;
+
+                return false;
             }
             catch (Exception ex) { throw ex; }
         }
@@ -135,9 +142,12 @@ namespace Votacao.Infra.Repositories
                 var sql = @"SELECT * FROM Usuario 
                             WHERE Login=@Login AND Senha=@Senha;";
 
-                var result = await _dataContext.SQLConnection.QueryAsync<bool>(sql, _parametros);
+                var result = await _dataContext.SQLConnection.QueryAsync<UsuarioQueryResult>(sql, _parametros);
 
-                return result.FirstOrDefault();
+                if (result.Count() > 0)
+                    return true;
+
+                return false;
             }
             catch (Exception ex) { throw ex; }
         }
@@ -150,9 +160,12 @@ namespace Votacao.Infra.Repositories
 
                 var sql = @"SELECT * FROM Usuario WHERE Login=@Login;";
 
-                var result = await _dataContext.SQLConnection.QueryAsync<bool>(sql, _parametros);
+                var result = await _dataContext.SQLConnection.QueryAsync<UsuarioQueryResult>(sql, _parametros);
 
-                return result.FirstOrDefault();
+                if (result.Count() > 0)
+                    return true;
+
+                return false;
             }
             catch (Exception ex) { throw ex; }
         }
@@ -161,15 +174,18 @@ namespace Votacao.Infra.Repositories
         {
             try
             {
-                _parametros.Add("IdUsuario", id, DbType.String);
+                _parametros.Add("IdUsuario", id, DbType.Guid);
 
                 var sql = @"SELECT * FROM Usuario u
                             INNER JOIN Voto v ON v.IdUsuario = u.Id
                             WHERE v.IdUsuario=@IdUsuario;";
 
-                var result = await _dataContext.SQLConnection.QueryAsync<bool>(sql, _parametros);
+                var result = await _dataContext.SQLConnection.QueryAsync<UsuarioQueryResult>(sql, _parametros);
 
-                return result.FirstOrDefault();
+                if (result.Count() > 0)
+                    return true;
+
+                return false;
             }
             catch (Exception ex) { throw ex; }
         }

@@ -144,6 +144,9 @@
   <data name="Login_ou_Senha_invalidos" xml:space="preserve">
     <value>Login ou Senha inválidos.</value>
   </data>
+  <data name="Pontuacao_Invalida" xml:space="preserve">
+    <value>Pontuação Inválida</value>
+  </data>
   <data name="Por_favor_corrija_as_inconsistências_abaixo" xml:space="preserve">
     <value>Por favor, corrija as inconsistências abaixo.</value>
   </data>
